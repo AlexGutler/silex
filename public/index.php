@@ -2,9 +2,6 @@
 
 require_once __DIR__.'/../bootstrap.php';
 
-/*use Symfony\Component\HttpFoundation\Response;
-$response = new Response();*/
-
 $clientes = array(
     0 => array(
         'nome' => 'Alex Gutler',
@@ -28,19 +25,8 @@ $clientes = array(
     )
 );
 
-$app->get("/clientes", function() use ($clientes){
-    $result = "";
-    $result .= '<h1>Listagem de Clientes:</h1>';
-
-    foreach ($clientes as $cliente)
-    {
-        $result .= 'Nome: '.$cliente['nome'].'<br>';
-        $result .= 'Email: '.$cliente['email'].'<br>';
-        $result .= 'CPF/CNPJ: '.$cliente['cpf-cnpj'].'<br>';
-        $result .= '-----------------------------------------------'.'<br>';
-    }
-
-    return $result;
+$app->get("/clientes", function(\Silex\Application $app) use ($clientes){
+    return $app->json($clientes);
 });
 
 $app->run();
