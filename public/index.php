@@ -2,9 +2,8 @@
 
 require_once __DIR__.'/../bootstrap.php';
 
-use Symfony\Component\HttpFoundation\Response;
-
-$response = new Response();
+/*use Symfony\Component\HttpFoundation\Response;
+$response = new Response();*/
 
 $clientes = array(
     0 => array(
@@ -29,18 +28,19 @@ $clientes = array(
     )
 );
 
-$app->get("/clientes", function() use ($clientes, $response){
-    echo '<h1>Listagem de Clientes:</h1>';
+$app->get("/clientes", function() use ($clientes){
+    $result = "";
+    $result .= '<h1>Listagem de Clientes:</h1>';
 
     foreach ($clientes as $cliente)
     {
-        echo 'Nome: '.$cliente['nome'].'<br>';
-        echo 'Email: '.$cliente['email'].'<br>';
-        echo 'CPF/CNPJ: '.$cliente['cpf-cnpj'].'<br>';
-        echo '-----------------------------------------------'.'<br>';
+        $result .= 'Nome: '.$cliente['nome'].'<br>';
+        $result .= 'Email: '.$cliente['email'].'<br>';
+        $result .= 'CPF/CNPJ: '.$cliente['cpf-cnpj'].'<br>';
+        $result .= '-----------------------------------------------'.'<br>';
     }
 
-    return $response;
+    return $result;
 });
 
 $app->run();
