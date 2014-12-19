@@ -26,9 +26,10 @@ class ProdutoService
 
         $mapper = $this->mapper;
 
-        $result = $mapper->insert($produtoEntity);
-
-        return $result;
+        if($mapper->insert($produtoEntity))
+            return $produtoEntity;
+        else
+            return 'Erro ao Cadastrar o Produto';
     }
 
 }

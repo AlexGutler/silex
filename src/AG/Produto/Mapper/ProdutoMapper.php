@@ -24,7 +24,7 @@ class ProdutoMapper
         $stmt->bindValue(':valor', $produto->getValor());
 
         if ($stmt->execute()){
-            return $stmt->fetch(\PDO::FETCH_ASSOC);
+            return true;
         } else {
             return false;
         }

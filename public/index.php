@@ -2,6 +2,10 @@
 
 require_once __DIR__.'/../bootstrap.php';
 
+require_once __DIR__.'/../config/connectionDB.php';
+
+$app['conn'] = connectionDB();
+
 use AG\Produto\Entity\Produto;
 use AG\Produto\Mapper\ProdutoMapper;
 use AG\Produto\Service\ProdutoService;
@@ -25,7 +29,7 @@ $app->get("/produto", function() use ($app)
 
     $result = $app['produtoService']->insert($dados);
 
-    return $app->json($result);
+    return 'Produto: '.$result->getNome().'<br>Descrição: '.$result->getDescricao().'<br>Valor: '.$result->getValor();
 });
 
 $app->run();
