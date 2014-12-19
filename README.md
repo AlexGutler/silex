@@ -1,11 +1,8 @@
-APIS E SILEX - Projeto Fase 1
+APIS E SILEX - Projeto Fase 2
 
-Preparando o ambiente
 
-O objetivo geral desse projeto ser· desenvolver uma API REST, utilizando inclusive banco de dados. Para isso ser· necess·rio termos uma estrutura b·sica necess·ria configurada para iniciarmos a criaÁ„o das APIs.
+Persistindo no banco
 
-Nessa fase do projeto, vocÍ instalar· o Silex e criar· 1 rotas principal, apenas para garantir que tudo est· configurado e funcionando.
+Utilizando os mesmos conceitos apresentados sobre a cria√ß√£o de novos servi√ßos, crie um servi√ßo que seja capaz de administrar uma simples table de produtos com o seguintes campos: (id, nome, descri√ß√£o e valor).
 
-1) Rota: /clientes
-
-Com a rota /clientes, faÁa a simulaÁ„o da listagem de clientes com Nome, Email e CPF/CNPJ vindo de um array. O formato de exibiÁ„o deve ser json.
+Ap√≥s a cria√ß√£o do servi√ßo, fa√ßa o registro do mesmo no container de servi√ßo do Silex.
