@@ -19,8 +19,9 @@ $app['produtoService'] = function() use ($app)
 };
 
 
-$app->get("/produto", function() use ($app)
+$app->get("/produtos", function() use ($app)
 {
+    /*
     $dados = array(
         'nome' => 'Playstation 4',
         'descricao' => 'Console da nova Geração Sony',
@@ -30,7 +31,11 @@ $app->get("/produto", function() use ($app)
     $result = $app['produtoService']->insert($dados);
 
     return 'Produto: '.$result->getNome().'<br>Descrição: '.$result->getDescricao().'<br>Valor: '.$result->getValor();
-});
+    */
+
+    return $app['twig']->render('produtos.twig', []);
+})->bind('produtos')
+;
 
 $app->get("/", function() use($app){
     return $app['twig']->render('index.twig', []);
