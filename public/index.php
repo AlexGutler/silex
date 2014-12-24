@@ -32,4 +32,9 @@ $app->get("/produto", function() use ($app)
     return 'Produto: '.$result->getNome().'<br>Descrição: '.$result->getDescricao().'<br>Valor: '.$result->getValor();
 });
 
+$app->get("/", function() use($app){
+    return $app['twig']->render('index.twig', []);
+})->bind('index')
+;
+
 $app->run();
