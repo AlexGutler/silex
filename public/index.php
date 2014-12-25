@@ -15,7 +15,7 @@ $app['mapper'] = function() use ($app) { return new ProdutoMapper($app['conn']);
 
 $app['produtoService'] = function() use ($app)
 {
-    return $produtoService = new ProdutoService($app['produto'], $app['mapper']);
+    return new ProdutoService($app['produto'], $app['mapper']);
 };
 
 

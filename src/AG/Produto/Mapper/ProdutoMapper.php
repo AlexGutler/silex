@@ -23,10 +23,6 @@ class ProdutoMapper
         $stmt->bindValue(':descricao', $produto->getDescricao());
         $stmt->bindValue(':valor', $produto->getValor());
 
-        if ($stmt->execute()){
-            return true;
-        } else {
-            return false;
-        }
+        return $stmt->execute() ? true : false;
     }
 }
