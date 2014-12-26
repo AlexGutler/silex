@@ -9,6 +9,8 @@ $app['conn'] = connectionDB();
 use AG\Produto\Entity\Produto;
 use AG\Produto\Mapper\ProdutoMapper;
 use AG\Produto\Service\ProdutoService;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 //
 $app['produto'] = function(){ return new Produto(); };
@@ -41,8 +43,22 @@ $app->get("/produtos", function() use ($app)
 
 // rota para criar novo produto
 $app->get("/produtos/novo", function() use($app){
-    return $app['twig']->render('produto-novo.twig', []);
+    return $app['twig']->render('produto-novo.twig', ['id' => 0]);
 })->bind('produto-novo')
+;
+
+// controller para salvar novo produto
+$app->post("/produtos/novo", function(Request $request) use($app){
+    $dados = $request->request->all();
+
+    $result = $app['produtoService']->insert($dados);
+
+    if ($result->getId()) {
+        return $app['twig']->render('produto-sucesso.twig', []);
+    } else {
+        $app->abort(500, "Erro ao salvar o produto");
+    }
+})->bind('produto-salvar')
 ;
 
 // rota para editar um produto
