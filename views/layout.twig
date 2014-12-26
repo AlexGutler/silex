@@ -5,8 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %} CodeEducation {% endblock %}</title>
-    <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap
+    <link href="css/bootstrap.min.css" rel="stylesheet">-->
+    <link href="{{ app.asset_path }}/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -28,13 +29,19 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">AG Produtos</a>
+                <a class="navbar-brand" href="{{ path('index') }}">AG Produtos</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="{{ path('index') }}">Home <span class="sr-only">(current)</span></a></li>
-                    <li><a href="{{ path('produtos') }}">Listagem</a></li>
+                    <li class="{% block classhome %}{% endblock %}"><a href="{{ path('index') }}">Home </a></li>
+                    <li class="dropdown {% block classprodutos %}{% endblock %}">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Produtos <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{ path('produto-novo') }}">Novo</a></li>
+                            <li><a href="{{ path('produtos') }}">Listar</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
@@ -57,6 +64,6 @@
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="../public/js/bootstrap.min.js"></script>
+<script src="{{ app.asset_path }}/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -1,8 +1,7 @@
-APIS E SILEX - Projeto Fase 2
+APIS E SILEX - Projeto Fase 3
 
+CRUD
 
-Persistindo no banco
+Agora que você já possui os serviços criados e sendo persistidos no banco dados, faça uma interface HTML de um CRUD (Operações de Criar, Recuperar, Alterar e Remover) utilizando esses serviços utilizando o Twig.
 
-Utilizando os mesmos conceitos apresentados sobre a criação de novos serviços, crie um serviço que seja capaz de administrar uma simples table de produtos com o seguintes campos: (id, nome, descrição e valor).
-
-Após a criação do serviço, faça o registro do mesmo no container de serviço do Silex.
+Lembrando que você obrigatóriamente terá de utilizar: Layouts e o UrlGenerator para fazer o link entre as páginas. Para facilitar o design da aplicação, utilize um tema básico do Twitter Bootstrap.

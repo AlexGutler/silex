@@ -37,6 +37,11 @@ $app->get("/produtos", function() use ($app)
 })->bind('produtos')
 ;
 
+$app->get("/produtos/novo", function() use($app){
+    return $app['twig']->render('produto-novo.twig', []);
+})->bind('produto-novo')
+;
+
 $app->get("/", function() use($app){
     return $app['twig']->render('index.twig', []);
 })->bind('index')
