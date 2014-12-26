@@ -18,7 +18,6 @@ $app['produtoService'] = function() use ($app)
     return new ProdutoService($app['produto'], $app['mapper']);
 };
 
-
 $app->get("/produtos", function() use ($app)
 {
     /*

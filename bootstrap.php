@@ -9,6 +9,3 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 ));
 
 $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
-
-// definido para carregar o css no twig
-$app['asset_path'] = 'http://localhost';
