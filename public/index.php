@@ -27,8 +27,22 @@ $app->get("/produtos", function() use ($app)
 {
     $produtos = $app['produtoService']->fetchAll();
 
-    return $app['twig']->render('produtos.twig', ['produtos'=>$produtos]);
+    return $app['twig']->render('produtos.twig', ['produtos'=>$produtos, 'deleted' => false]);
 })->bind('produtos')
+;
+
+$app->get('/produto/deletar/{id}', function($id) use($app){
+    $result = $app['produtoService']->delete($id);
+    if ($result)
+    {
+        //$app->redirect('produtos?deleted=true');
+        $produtos = $app['produtoService']->fetchAll();
+        return $app['twig']->render('produtos.twig', ['produtos' => $produtos, 'deleted' => true]);
+    } else {
+        $app->abort(500, "Erro ao deletar o produto");
+    }
+//    $app->redirect('produtos');
+})->bind('produto-deletar')
 ;
 
 // rota para criar novo produto
@@ -76,14 +90,6 @@ $app->post("/produtos/editar", function(Request $request) use($app) {
         $app->abort(500, "Erro ao atualizar o produto");
     }
 })->bind('produto-atualizar')
-;
-
-
-$app->get('/produto/deletar/{id}', function($id) use($app){
-    // fazer deletar .....
-
-    $app->redirect('produtos');
-})->bind('produto-deletar')
 ;
 
 // rota index

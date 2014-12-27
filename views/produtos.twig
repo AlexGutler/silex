@@ -7,6 +7,9 @@
         <h1>Listagem de Produtos</h1>
     </header>
     <section class="container">
+        {% if deleted %}
+            <span class="alert-danger">Produto removido com sucesso!</span>
+        {% endif %}
         <table class="table table-hover">
             <tbody>
             <tr>

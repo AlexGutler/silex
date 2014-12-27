@@ -49,6 +49,12 @@ class ProdutoService
         return $mapper->update($produtoEntity) ? true : false;
     }
 
+    public function delete($id)
+    {
+        $mapper = $this->mapper;
+        return $mapper->delete($id) ? true : false;
+    }
+
     public function fetch($id)
     {
         $dados = $this->mapper->fetch($id);

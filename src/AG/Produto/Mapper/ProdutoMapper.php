@@ -43,6 +43,16 @@ class ProdutoMapper
         return $stmt->execute() ? true : false;
     }
 
+    public function delete($id)
+    {
+        $sql = "DELETE FROM `produtos` WHERE `id` = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindValue(':id', $id);
+
+        return $stmt->execute() ? true : false;
+    }
+
+
     public function fetchAll()
     {
         $sql = "SELECT * FROM `produtos`;";
