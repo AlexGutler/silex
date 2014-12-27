@@ -22,36 +22,28 @@ $app['produtoService'] = function() use ($app)
     return new ProdutoService($app['produto'], $app['mapper']);
 };
 
-// rota para listar dos produtos
+// rota para listagem dos produtos
 $app->get("/produtos", function() use ($app)
 {
-    /*
-    $dados = array(
-        'nome' => 'Playstation 4',
-        'descricao' => 'Console da nova Geração Sony',
-        'valor' => 2200
-    );
+    $produtos = $app['produtoService']->fetchAll();
 
-    $result = $app['produtoService']->insert($dados);
-
-    return 'Produto: '.$result->getNome().'<br>Descrição: '.$result->getDescricao().'<br>Valor: '.$result->getValor();
-    */
-
-    return $app['twig']->render('produtos.twig', []);
+    return $app['twig']->render('produtos.twig', ['produtos'=>$produtos]);
 })->bind('produtos')
 ;
 
 // rota para criar novo produto
 $app->get("/produtos/novo", function() use($app){
-    return $app['twig']->render('produto-novo.twig', ['id' => 0]);
+    return $app['twig']->render('produto-novo.twig', ['id' => null]);
 })->bind('produto-novo')
 ;
 
 // controller para salvar novo produto
-$app->post("/produtos/novo", function(Request $request) use($app){
+$app->post("/produtos/novo", function(Request $request) use($app) {
     $dados = $request->request->all();
 
     $result = $app['produtoService']->insert($dados);
+
+    //var_dump($result);
 
     if ($result->getId()) {
         return $app['twig']->render('produto-sucesso.twig', []);
@@ -63,8 +55,35 @@ $app->post("/produtos/novo", function(Request $request) use($app){
 
 // rota para editar um produto
 $app->get("/produtos/{id}/editar", function($id) use($app){
-    return $app['twig']->render('produto-editar.twig', ['id' => $id]);
+    $result = $app['produtoService']->fetch($id);
+
+    //var_dump($result);
+
+    return $app['twig']->render('produto-novo.twig',
+        ['id' => $id, 'nome' => $result['nome'], 'descricao' => $result['descricao'], 'valor' => $result['valor']]);
 })->bind('produto-editar')
+;
+
+// controller para atualizar produto
+$app->post("/produtos/editar", function(Request $request) use($app) {
+    $dados = $request->request->all();
+    //var_dump($dados);
+    $result = $app['produtoService']->update($dados);
+
+    if ($result) {
+        return $app['twig']->render('produto-sucesso.twig', []);
+    } else {
+        $app->abort(500, "Erro ao atualizar o produto");
+    }
+})->bind('produto-atualizar')
+;
+
+
+$app->get('/produto/deletar/{id}', function($id) use($app){
+    // fazer deletar .....
+
+    $app->redirect('produtos');
+})->bind('produto-deletar')
 ;
 
 // rota index
@@ -72,5 +91,6 @@ $app->get("/", function() use($app){
     return $app['twig']->render('index.twig', []);
 })->bind('index')
 ;
+
 
 $app->run();

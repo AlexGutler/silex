@@ -26,10 +26,41 @@ class ProdutoService
 
         $mapper = $this->mapper;
 
-        if($mapper->insert($produtoEntity))
+        $id = $mapper->insert($produtoEntity);
+
+        if($id <> null)
+        {
+            $produtoEntity->setId($id);
             return $produtoEntity;
-        else
-            return 'Erro ao Cadastrar o Produto';
+        } else {
+            return null;
+        }
+    }
+
+    public function update(array $data)
+    {
+        $produtoEntity = $this->produto;
+        //var_dump($data);
+        $produtoEntity->setId($data['id'])
+            ->setNome($data['nome'])
+            ->setDescricao($data['descricao'])
+            ->setValor($data['valor']);
+        $mapper = $this->mapper;
+        return $mapper->update($produtoEntity) ? true : false;
+    }
+
+    public function fetch($id)
+    {
+        $dados = $this->mapper->fetch($id);
+
+        return $dados;
+    }
+
+    public function fetchAll()
+    {
+        $dados = $this->mapper->fetchAll();
+
+        return $dados;
     }
 
 }

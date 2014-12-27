@@ -19,6 +19,11 @@ class Produto
         return $this->id;
     }
 
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
     /**
      * @return mixed
      */
@@ -73,4 +78,8 @@ class Produto
         return $this;
     }
 
+    public function __toString()
+    {
+        return 'id-> '.$this->getId().' | nome-> '.$this->getNome().' | descricao-> '.$this->getDescricao().' | valor-> '.$this->getValor();
+    }
 }
