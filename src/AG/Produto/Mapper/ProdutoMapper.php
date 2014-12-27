@@ -21,7 +21,7 @@ class ProdutoMapper
 
         $stmt->bindValue(':nome', $produto->getNome());
         $stmt->bindValue(':descricao', $produto->getDescricao());
-        $stmt->bindValue(':valor', number_format($produto->getValor(),2,",","."));
+        $stmt->bindValue(':valor', $produto->getValor());
 
         return $stmt->execute() ? $this->conn->lastInsertId() : null;
     }

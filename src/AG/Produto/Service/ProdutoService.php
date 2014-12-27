@@ -40,7 +40,7 @@ class ProdutoService
     public function update(array $data)
     {
         $produtoEntity = $this->produto;
-        //var_dump($data);
+
         $produtoEntity->setId($data['id'])
             ->setNome($data['nome'])
             ->setDescricao($data['descricao'])

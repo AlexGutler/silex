@@ -7,6 +7,7 @@
         <h1>Listagem de Produtos</h1>
     </header>
     <section class="container">
+
         {% if deleted %}
             <span class="alert-danger">Produto removido com sucesso!</span>
         {% endif %}
@@ -27,7 +28,7 @@
                     <td>{{ produto.valor }}</td>
                     <td>
                         <a class="btn btn-primary" href="{{ path('produto-editar', {id: produto.id}) }}">Editar</a>
-                        <a class="btn btn-danger" href="{{ path('produto-deletar', {id: produto.id}) }}">Excluir</a>
+                        <a class="btn btn-danger" href="{{ path('produto-deletar', {id: produto.id}) }}">Remover</a>
                     </td>
                 </tr>
             {% endfor %}

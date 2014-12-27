@@ -12,10 +12,10 @@ use AG\Produto\Service\ProdutoService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
-//
+// armazenando a entidade produto
 $app['produto'] = function(){ return new Produto(); };
+//armazenando o mapper do produto
 $app['mapper'] = function() use ($app) { return new ProdutoMapper($app['conn']);};
-
 // armazenar o service do produto
 $app['produtoService'] = function() use ($app)
 {
@@ -28,28 +28,24 @@ $app->get("/produtos", function() use ($app)
     $produtos = $app['produtoService']->fetchAll();
 
     return $app['twig']->render('produtos.twig', ['produtos'=>$produtos, 'deleted' => false]);
-})->bind('produtos')
-;
+})->bind('produtos');
 
+// controller para deletar um produto e voltar a listagem
 $app->get('/produto/deletar/{id}', function($id) use($app){
     $result = $app['produtoService']->delete($id);
     if ($result)
     {
-        //$app->redirect('produtos?deleted=true');
         $produtos = $app['produtoService']->fetchAll();
         return $app['twig']->render('produtos.twig', ['produtos' => $produtos, 'deleted' => true]);
     } else {
         $app->abort(500, "Erro ao deletar o produto");
     }
-//    $app->redirect('produtos');
-})->bind('produto-deletar')
-;
+})->bind('produto-deletar');
 
 // rota para criar novo produto
 $app->get("/produtos/novo", function() use($app){
     return $app['twig']->render('produto-novo.twig', ['id' => null]);
-})->bind('produto-novo')
-;
+})->bind('produto-novo');
 
 // controller para salvar novo produto
 $app->post("/produtos/novo", function(Request $request) use($app) {
@@ -57,26 +53,20 @@ $app->post("/produtos/novo", function(Request $request) use($app) {
 
     $result = $app['produtoService']->insert($dados);
 
-    //var_dump($result);
-
     if ($result->getId()) {
         return $app['twig']->render('produto-sucesso.twig', []);
     } else {
         $app->abort(500, "Erro ao salvar o produto");
     }
-})->bind('produto-salvar')
-;
+})->bind('produto-salvar');
 
 // rota para editar um produto
 $app->get("/produtos/{id}/editar", function($id) use($app){
     $result = $app['produtoService']->fetch($id);
 
-    //var_dump($result);
-
     return $app['twig']->render('produto-novo.twig',
         ['id' => $id, 'nome' => $result['nome'], 'descricao' => $result['descricao'], 'valor' => $result['valor']]);
-})->bind('produto-editar')
-;
+})->bind('produto-editar');
 
 // controller para atualizar produto
 $app->post("/produtos/editar", function(Request $request) use($app) {
@@ -89,14 +79,11 @@ $app->post("/produtos/editar", function(Request $request) use($app) {
     } else {
         $app->abort(500, "Erro ao atualizar o produto");
     }
-})->bind('produto-atualizar')
-;
+})->bind('produto-atualizar');
 
 // rota index
 $app->get("/", function() use($app){
     return $app['twig']->render('index.twig', []);
-})->bind('index')
-;
-
+})->bind('index');
 
 $app->run();
