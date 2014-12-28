@@ -2,7 +2,7 @@
 
 require_once __DIR__.'/../bootstrap.php';
 
-require_once __DIR__.'/../config/connectionDB.php';
+require_once __DIR__ . '/../src/AG/config/connectionDB.php';
 
 $app['conn'] = connectionDB();
 
