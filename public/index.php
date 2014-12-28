@@ -6,11 +6,12 @@ require_once __DIR__ . '/../src/AG/config/connectionDB.php';
 
 $app['conn'] = connectionDB();
 
-use AG\Produto\Entity\Produto;
-use AG\Produto\Mapper\ProdutoMapper;
-use AG\Produto\Service\ProdutoService;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
+use AG\Produto\Entity\Produto,
+    AG\Produto\Mapper\ProdutoMapper,
+    AG\Produto\Service\ProdutoService,
+    AG\Produto\Controller\ProdutoContollerProvider;
+use Symfony\Component\HttpFoundation\Response,
+    Symfony\Component\HttpFoundation\Request;
 
 // armazenando a entidade produto
 $app['produto'] = function(){ return new Produto(); };
@@ -23,14 +24,16 @@ $app['produtoService'] = function() use ($app)
 };
 
 // rota para listagem dos produtos
-$app->get("/produtos", function() use ($app)
-{
-    $produtos = $app['produtoService']->fetchAll();
+//$app->get("/produtos", function() use ($app)
+//{
+//    $produtos = $app['produtoService']->fetchAll();
+//
+//    return $app['twig']->render('produtos.twig', ['produtos'=>$produtos, 'deleted' => false]);
+//})->bind('produtos');
+$app->mount('/produtos', new ProdutoContollerProvider());
 
-    return $app['twig']->render('produtos.twig', ['produtos'=>$produtos, 'deleted' => false]);
-})->bind('produtos');
 
-// controller para deletar um produto e voltar a listagem
+// Controller para deletar um produto e voltar a listagem
 $app->get('/produto/deletar/{id}', function($id) use($app){
     $result = $app['produtoService']->delete($id);
     if ($result)
@@ -47,7 +50,7 @@ $app->get("/produtos/novo", function() use($app){
     return $app['twig']->render('produto-novo.twig', ['id' => null]);
 })->bind('produto-novo');
 
-// controller para salvar novo produto
+// Controller para salvar novo produto
 $app->post("/produtos/novo", function(Request $request) use($app) {
     $dados = $request->request->all();
 
@@ -68,7 +71,7 @@ $app->get("/produtos/{id}/editar", function($id) use($app){
         ['id' => $id, 'nome' => $result['nome'], 'descricao' => $result['descricao'], 'valor' => $result['valor']]);
 })->bind('produto-editar');
 
-// controller para atualizar produto
+// Controller para atualizar produto
 $app->post("/produtos/editar", function(Request $request) use($app) {
     $dados = $request->request->all();
     //var_dump($dados);
