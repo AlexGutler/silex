@@ -18,8 +18,6 @@ class ProdutoService
 
     public function insert(array $data)
     {
-        //$produtoEntity = $this->produto;
-
         $this->produto->setNome($data['nome'])
                       ->setDescricao($data['descricao'])
                       ->setValor($data['valor']);
@@ -39,8 +37,6 @@ class ProdutoService
 
     public function update(array $data)
     {
-        //$produtoEntity = $this->produto;
-
         $this->produto->setId($data['id'])
             ->setNome($data['nome'])
             ->setDescricao($data['descricao'])
@@ -51,21 +47,18 @@ class ProdutoService
 
     public function delete($id)
     {
-        //$mapper = $this->mapper;
         return  $this->mapper->delete($id) ? true : false;
     }
 
     public function fetch($id)
     {
         $dados = $this->mapper->fetch($id);
-
         return $dados;
     }
 
     public function fetchAll()
     {
         $dados = $this->mapper->fetchAll();
-
         return $dados;
     }
 
