@@ -39,7 +39,7 @@ class ProdutoContollerProvider implements ControllerProviderInterface
         })->bind('produto-salvar');
 
         // deletar produto
-        $controllers->get('/deletar/{id}', function($id) use($app){
+        $controllers->get('/{id}/deletar', function($id) use($app){
             $result = $app['produtoService']->delete($id);
             if ($result)
             {

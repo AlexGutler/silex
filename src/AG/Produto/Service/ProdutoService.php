@@ -18,20 +18,20 @@ class ProdutoService
 
     public function insert(array $data)
     {
-        $produtoEntity = $this->produto;
+        //$produtoEntity = $this->produto;
 
-        $produtoEntity->setNome($data['nome'])
+        $this->produto->setNome($data['nome'])
                       ->setDescricao($data['descricao'])
                       ->setValor($data['valor']);
 
         $mapper = $this->mapper;
 
-        $id = $mapper->insert($produtoEntity);
+        $id = $mapper->insert($this->produto);
 
         if($id <> null)
         {
-            $produtoEntity->setId($id);
-            return $produtoEntity;
+            $this->produto->setId($id);
+            return $this->produto;
         } else {
             return null;
         }
@@ -39,20 +39,20 @@ class ProdutoService
 
     public function update(array $data)
     {
-        $produtoEntity = $this->produto;
+        //$produtoEntity = $this->produto;
 
-        $produtoEntity->setId($data['id'])
+        $this->produto->setId($data['id'])
             ->setNome($data['nome'])
             ->setDescricao($data['descricao'])
             ->setValor($data['valor']);
         $mapper = $this->mapper;
-        return $mapper->update($produtoEntity) ? true : false;
+        return $mapper->update($this->produto) ? true : false;
     }
 
     public function delete($id)
     {
-        $mapper = $this->mapper;
-        return $mapper->delete($id) ? true : false;
+        //$mapper = $this->mapper;
+        return  $this->mapper->delete($id) ? true : false;
     }
 
     public function fetch($id)
