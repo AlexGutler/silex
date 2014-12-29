@@ -2,7 +2,7 @@
 
 require_once __DIR__.'/../bootstrap.php';
 
-require_once __DIR__ . '/../src/AG/config/connectionDB.php';
+require_once __DIR__ .'/../src/AG/config/connectionDB.php';
 
 $app['conn'] = connectionDB();
 
@@ -21,23 +21,8 @@ $app['mapper'] = function() use ($app) { return new ProdutoMapper($app['conn']);
 $app['produtoService'] = function() use ($app) {return new ProdutoService($app['produto'], $app['mapper']); };
 
 
-// rota para listagem dos produtos
+// mount no ControllerProvider de Produtos
 $app->mount('/produtos', new ProdutoContollerProvider());
-
-// Controller para deletar um produto e voltar a listagem
-$app->mount('/produtos/deletar/{id}', new ProdutoContollerProvider());
-
-// rota para criar novo produto
-$app->mount('/produtos/novo', new ProdutoContollerProvider());
-
-// Controller para salvar novo produto
-$app->mount('/produtos/novo', new ProdutoContollerProvider());
-
-// rota para editar um produto
-$app->mount('/produtos/{id}/editar', new ProdutoContollerProvider());
-
-// Controller para atualizar produto
-$app->mount('/produtos/editar', new ProdutoContollerProvider());
 
 // rota index
 $app->get("/", function() use($app){
