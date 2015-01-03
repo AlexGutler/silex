@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__.'/../bootstrap.php';
+
 use AG\Database\DB;
 use AG\Produto\Entity\Produto,
     AG\Produto\Mapper\ProdutoMapper,
@@ -8,22 +10,24 @@ use AG\Produto\Entity\Produto,
 use Symfony\Component\HttpFoundation\Response,
     Symfony\Component\HttpFoundation\Request;
 
-require_once __DIR__.'/../bootstrap.php';
-
+/** CONFIGURAÇÃO DE DEPENDENCIAS - PIMPLE */
 // criando a conexão
-$config = include_once __DIR__ .'/../src/AG/config/config.php';
-/*$conn = new DB($config['db']['dsn'], $config['db']['username'], $config['db']['password']);
-$app['conn'] = $conn->getConnection();*/
-
+$config = include __DIR__ .'/../src/AG/config/config.php';
 $app['conn'] = function() use ($config){
     return (new DB($config['db']['dsn'], $config['db']['username'], $config['db']['password']))->getConnection();
 };
 // armazenando a entidade produto
-$app['produto'] = function(){ return new Produto(); };
+$app['produto'] = function(){
+    return new Produto();
+};
 //armazenando o mapper do produto
-$app['mapper'] = function() use ($app) { return new ProdutoMapper($app['conn']);};
+$app['mapper'] = function() use ($app) {
+    return new ProdutoMapper($app['conn']);
+};
 // armazenar o service do produto
-$app['produtoService'] = function() use ($app) {return new ProdutoService($app['produto'], $app['mapper']); };
+$app['produtoService'] = function() use ($app) {
+    return new ProdutoService($app['produto'], $app['mapper']);
+};
 
 // mount no ControllerProvider de Produtos
 $app->mount('/produtos', new ProdutoControllerProvider());
