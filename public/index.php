@@ -9,7 +9,8 @@ $app['conn'] = connectionDB();
 use AG\Produto\Entity\Produto,
     AG\Produto\Mapper\ProdutoMapper,
     AG\Produto\Service\ProdutoService,
-    AG\Produto\Controller\ProdutoContollerProvider;
+    AG\Produto\Controller\ProdutoControllerProvider,
+    AG\Produto\Controller\ApiProdutoControllerProvider;
 use Symfony\Component\HttpFoundation\Response,
     Symfony\Component\HttpFoundation\Request;
 
@@ -20,9 +21,11 @@ $app['mapper'] = function() use ($app) { return new ProdutoMapper($app['conn']);
 // armazenar o service do produto
 $app['produtoService'] = function() use ($app) {return new ProdutoService($app['produto'], $app['mapper']); };
 
-
 // mount no ControllerProvider de Produtos
-$app->mount('/produtos', new ProdutoContollerProvider());
+$app->mount('/produtos', new ProdutoControllerProvider());
+
+// mount no API REST
+$app->mount('/api/produtos', new ApiProdutoControllerProvider());
 
 // rota index
 $app->get("/", function() use($app){
