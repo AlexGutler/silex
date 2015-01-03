@@ -1,11 +1,5 @@
 <?php
-
-require_once __DIR__.'/../bootstrap.php';
-
-require_once __DIR__ .'/../src/AG/config/connectionDB.php';
-
-$app['conn'] = connectionDB();
-
+use AG\Database\DB;
 use AG\Produto\Entity\Produto,
     AG\Produto\Mapper\ProdutoMapper,
     AG\Produto\Service\ProdutoService,
@@ -14,6 +8,16 @@ use AG\Produto\Entity\Produto,
 use Symfony\Component\HttpFoundation\Response,
     Symfony\Component\HttpFoundation\Request;
 
+require_once __DIR__.'/../bootstrap.php';
+
+// criando a conexão
+$config = include_once __DIR__ .'/../src/AG/config/config.php';
+/*$conn = new DB($config['db']['dsn'], $config['db']['username'], $config['db']['password']);
+$app['conn'] = $conn->getConnection();*/
+
+$app['conn'] = function() use ($config){
+    return (new DB($config['db']['dsn'], $config['db']['username'], $config['db']['password']))->getConnection();
+};
 // armazenando a entidade produto
 $app['produto'] = function(){ return new Produto(); };
 //armazenando o mapper do produto
