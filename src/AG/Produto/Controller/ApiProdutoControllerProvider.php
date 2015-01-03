@@ -24,58 +24,24 @@ class ApiProdutoControllerProvider implements ControllerProviderInterface
         // listar apenas 1
         $controllers->get('/{id}', function (Application $app, $id) {
             $produto = $app['produtoService']->fetch($id);
-            if (! $produto) { return $app->json(['erro' => "Produto não encontrado."]); }
 
             return $app->json($produto);
         })->bind('api-produtos-listar-id');
 
         // cadastrar
         $controllers->post("/", function(Request $request) use($app) {
-            $dados = [
-                'nome' => $request->get('nome'),
-                'descricao' => $request->get('descricao'),
-                'valor' => $request->get('valor')
-            ];
+            $result = $app['produtoService']->insert($request);
 
-            if (! isset($dados['nome'])) {
-                return $app->json(['erro' => "O Nome é Obrigatório"]);
-            }
-            if(! isset($dados['descricao'])){
-                return $app->json(['erro' => "A Descrição é Obrigatória"]);
-            }
-            if(! isset($dados['valor'])){
-                return $app->json(['erro' => "O Valor é Obrigatório"]);
-            }
-
-            $result = $app['produtoService']->insert($dados);
-
-            if (! empty($result)) {
+            if (!empty($result)) {
                 return $app->json(['success'=> "Produto Cadastrado com Sucesso!"]);
             } else {
-                return $app->json(['erro'=> "Erro ao salvar o produto"]);
+                return $app->json(['erro'=> "Erro ao Cadastrar o produto"]);
             }
         })->bind('api-produtos-cadastrar');
 
         // alterar
-        $controllers->put("/{id}", function($id, Request $request) use($app) {
-            $dados = [
-                'nome' => $request->get('nome'),
-                'descricao' => $request->get('descricao'),
-                'valor' => $request->get('valor'),
-                'id' => $id,
-            ];
-
-            if (! isset($dados['nome'])) {
-                return $app->json(['erro' => "O Nome é Obrigatório"]);
-            }
-            if(! isset($dados['descricao'])){
-                return $app->json(['erro' => "A Descrição é Obrigatória"]);
-            }
-            if(! isset($dados['valor'])){
-                return $app->json(['erro' => "O Valor é Obrigatório"]);
-            }
-
-            $result = $app['produtoService']->update($dados);
+        $controllers->put("/{id}", function(Request $request, $id) use($app) {
+            $result = $app['produtoService']->update($request, $id);
 
             if ($result) {
                 return $app->json(['success' => "Produto Alterado com Sucesso!"]);

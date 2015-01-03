@@ -5,12 +5,13 @@ use AG\Database\DB;
 use AG\Produto\Entity\Produto,
     AG\Produto\Mapper\ProdutoMapper,
     AG\Produto\Service\ProdutoService,
+    AG\Produto\Validator\ProdutoValidator,
     AG\Produto\Controller\ProdutoControllerProvider,
     AG\Produto\Controller\ApiProdutoControllerProvider;
 use Symfony\Component\HttpFoundation\Response,
     Symfony\Component\HttpFoundation\Request;
 
-/** CONFIGURAÇÃO DE DEPENDENCIAS - PIMPLE */
+/* CONFIGURAÇÃO DE DEPENDENCIAS - PIMPLE */
 // criando a conexão
 $config = include __DIR__ .'/../src/AG/config/config.php';
 $app['conn'] = function() use ($config){
@@ -24,10 +25,15 @@ $app['produto'] = function(){
 $app['mapper'] = function() use ($app) {
     return new ProdutoMapper($app['conn']);
 };
+// armazenando a dependencia ao ProdutoValidator
+$app['produtoValidator'] = function(){
+  return new ProdutoValidator();
+};
 // armazenar o service do produto
 $app['produtoService'] = function() use ($app) {
-    return new ProdutoService($app['produto'], $app['mapper']);
+    return new ProdutoService($app['produto'], $app['mapper'], $app['produtoValidator']);
 };
+
 
 // mount no ControllerProvider de Produtos
 $app->mount('/produtos', new ProdutoControllerProvider());

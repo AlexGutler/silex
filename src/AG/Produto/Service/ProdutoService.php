@@ -3,51 +3,58 @@
 namespace AG\Produto\Service;
 
 use AG\Produto\Entity\Produto,
-    AG\Produto\Mapper\ProdutoMapper;
+    AG\Produto\Mapper\ProdutoMapper,
+    AG\Produto\Validator\ProdutoValidator;
+use Symfony\Component\HttpFoundation\Request;
 
 class ProdutoService
 {
     private $produto;
     private $mapper;
+    private $validator;
 
-    public function __construct(Produto $produto, ProdutoMapper $mapper)
+    public function __construct(Produto $produto, ProdutoMapper $mapper, ProdutoValidator $validator)
     {
         $this->produto = $produto;
         $this->mapper = $mapper;
+        $this->validator = $validator;
     }
 
-    public function insert(array $data)
+    public function insert(Request $request)
     {
-        $this->produto->setNome($data['nome'])
-                      ->setDescricao($data['descricao'])
-                      ->setValor($data['valor']);
+        $this->produto->setNome($request->get('nome'))
+                      ->setDescricao($request->get('descricao'))
+                      ->setValor($request->get('valor'));
 
-        $mapper = $this->mapper;
-
-        $id = $mapper->insert($this->produto);
-
-        if($id <> null)
+        if(!$this->validator->validate($this->produto))
         {
-            $this->produto->setId($id);
-            return $this->produto;
-        } else {
             return null;
         }
+
+        $id = $this->$mapper->insert($this->produto);
+        $this->produto->setId($id);
+
+        return $this->produto;
     }
 
-    public function update(array $data)
+    public function update(Request $request, $id)
     {
-        $this->produto->setId($data['id'])
-            ->setNome($data['nome'])
-            ->setDescricao($data['descricao'])
-            ->setValor($data['valor']);
-        $mapper = $this->mapper;
-        return $mapper->update($this->produto) ? true : false;
+        $this->produto->setId($id)
+            ->setNome($request->get('nome'))
+            ->setDescricao($request->get('descricao'))
+            ->setValor($request->get('valor'));
+
+        if (!$this->validator->validate($this->produto))
+        {
+            return false;
+        }
+
+        return $this->$mapper->update($this->produto) ? true : false;
     }
 
     public function delete($id)
     {
-        return  $this->mapper->delete($id) ? true : false;
+        return $this->mapper->delete($id);
     }
 
     public function fetch($id)
@@ -61,5 +68,4 @@ class ProdutoService
         $dados = $this->mapper->fetchAll();
         return $dados;
     }
-
 }
