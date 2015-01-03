@@ -14,7 +14,7 @@ class ProdutoContollerProvider implements ControllerProviderInterface
     {
         $controllers = $app['controllers_factory'];
 
-        // listagem de produts
+        // listagem de produtos
         $controllers->get('/', function (Application $app) {
             $produtos = $app['produtoService']->fetchAll();
 
