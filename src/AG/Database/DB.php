@@ -7,10 +7,10 @@ class DB
 {
     private $pdo;
 
-    public function __construct($dns, $username, $password)
+    public function __construct($dsn, $username, $password)
     {
         try {
-            $this->pdo = new \PDO($dns, $username, $password);
+            $this->pdo = new \PDO($dsn, $username, $password);
         } catch(\PDOException $e) {
             echo $e->getMessage()."\n";
             echo $e->getTraceAsString()."\n";
