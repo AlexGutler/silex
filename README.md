@@ -1,7 +1,11 @@
-APIS E SILEX - Projeto Fase 3
+APIs públicas
 
-CRUD
+Agora que você já desenvolveu uma aplicação que possui: Camada de Serviços e Interface utilizando o Twig, disponibilize uma API REST, para que softwares externos possam consumir.
 
-Agora que você já possui os serviços criados e sendo persistidos no banco dados, faça uma interface HTML de um CRUD (Operações de Criar, Recuperar, Alterar e Remover) utilizando esses serviços utilizando o Twig.
+Você deverá disponibilizar as seguintes funções: Listar tudo, listar apenas 1, criar, alterar e remover.
 
-Lembrando que você obrigatóriamente terá de utilizar: Layouts e o UrlGenerator para fazer o link entre as páginas. Para facilitar o design da aplicação, utilize um tema básico do Twitter Bootstrap.
+Lembre-se que sua API deve acessar diretamente sua camada de serviços para que você concluir a operação.
+
+====
+
+5 Estrelinhas para quem validar todos os dados de entrada e retornar um erro explicativo no retorno do JSON. =)
