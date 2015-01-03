@@ -87,8 +87,8 @@ class ApiProdutoControllerProvider implements ControllerProviderInterface
         // deletar
         $controllers->delete('/{id}', function($id) use($app){
             $result = $app['produtoService']->delete($id);
-            
-            if (!$result) {
+
+            if ($result) {
                 return $app->json(['success' => "Produto Removido com Sucesso!"]);
             } else {
                 return $app->json(['erro '=> "Erro ao Remover o produto"]);
