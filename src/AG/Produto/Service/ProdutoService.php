@@ -25,13 +25,14 @@ class ProdutoService
         $this->produto->setNome($request->get('nome'))
                       ->setDescricao($request->get('descricao'))
                       ->setValor($request->get('valor'));
+        //echo $this->produto->getNome().' - '.$this->produto->getDescricao().' - '.$this->produto->getValor().' - ALEX';
 
         if(!$this->validator->validate($this->produto))
         {
             return null;
         }
 
-        $id = $this->$mapper->insert($this->produto);
+        $id = $this->mapper->insert($this->produto);
         $this->produto->setId($id);
 
         return $this->produto;
@@ -49,7 +50,7 @@ class ProdutoService
             return false;
         }
 
-        return $this->$mapper->update($this->produto) ? true : false;
+        return $this->mapper->update($this->produto) ? true : false;
     }
 
     public function delete($id)

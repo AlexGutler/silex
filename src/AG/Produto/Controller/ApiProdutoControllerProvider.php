@@ -29,7 +29,7 @@ class ApiProdutoControllerProvider implements ControllerProviderInterface
         })->bind('api-produtos-listar-id');
 
         // cadastrar
-        $controllers->post("/", function(Request $request) use($app) {
+        $controllers->post('/', function(Request $request) use($app) {
             $result = $app['produtoService']->insert($request);
 
             if (!empty($result)) {
