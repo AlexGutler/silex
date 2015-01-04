@@ -11,13 +11,13 @@ class ProdutoService
 {
     private $produto;
     private $mapper;
-    private $validator;
+    private $produtoValidator;
 
-    public function __construct(Produto $produto, ProdutoMapper $mapper, ProdutoValidator $validator)
+    public function __construct(Produto $produto, ProdutoMapper $mapper, ProdutoValidator $produtoValidator)
     {
         $this->produto = $produto;
         $this->mapper = $mapper;
-        $this->validator = $validator;
+        $this->produtoValidator = $produtoValidator;
     }
 
     public function insert(Request $request)
@@ -25,17 +25,13 @@ class ProdutoService
         $this->produto->setNome($request->get('nome'))
                       ->setDescricao($request->get('descricao'))
                       ->setValor($request->get('valor'));
-        //echo $this->produto->getNome().' - '.$this->produto->getDescricao().' - '.$this->produto->getValor().' - ALEX';
 
-        if(!$this->validator->validate($this->produto))
+        if(is_string($this->produtoValidator->validate($this->produto)))
         {
-            return null;
+            return $this->produtoValidator->validate($this->produto);
         }
 
-        $id = $this->mapper->insert($this->produto);
-        $this->produto->setId($id);
-
-        return $this->produto;
+        return $this->mapper->insert($this->produto) ? true : false;
     }
 
     public function update(Request $request, $id)
@@ -45,9 +41,9 @@ class ProdutoService
             ->setDescricao($request->get('descricao'))
             ->setValor($request->get('valor'));
 
-        if (!$this->validator->validate($this->produto))
+        if (is_string($this->produtoValidator->validate($this->produto)))
         {
-            return false;
+            return $this->produtoValidator->validate($this->produto);
         }
 
         return $this->mapper->update($this->produto) ? true : false;

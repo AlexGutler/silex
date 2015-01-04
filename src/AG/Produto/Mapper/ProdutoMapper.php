@@ -23,7 +23,7 @@ class ProdutoMapper
         $stmt->bindValue(':descricao', $produto->getDescricao());
         $stmt->bindValue(':valor', $produto->getValor());
 
-        return $stmt->execute() ? $this->conn->lastInsertId() : null;
+        return $stmt->execute() ? true : false;
     }
 
     public function update(Produto $produto)

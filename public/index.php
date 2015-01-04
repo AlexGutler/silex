@@ -8,6 +8,7 @@ use AG\Produto\Entity\Produto,
     AG\Produto\Validator\ProdutoValidator,
     AG\Produto\Controller\ProdutoControllerProvider,
     AG\Produto\Controller\ApiProdutoControllerProvider;
+use AG\Validator\Validator;
 use Symfony\Component\HttpFoundation\Response,
     Symfony\Component\HttpFoundation\Request;
 
@@ -25,9 +26,13 @@ $app['produto'] = function(){
 $app['mapper'] = function() use ($app) {
     return new ProdutoMapper($app['conn']);
 };
+//armazenando o validator
+$app['valitor'] = function() {
+    return new Validator();
+};
 // armazenando a dependencia ao ProdutoValidator
-$app['produtoValidator'] = function(){
-  return new ProdutoValidator();
+$app['produtoValidator'] = function() use($app){
+  return new ProdutoValidator($app['valitor']);
 };
 // armazenar o service do produto
 $app['produtoService'] = function() use ($app) {

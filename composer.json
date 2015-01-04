@@ -7,7 +7,8 @@
   "autoload":{
     "psr-4": {
       "AG\\Produto\\": "src/AG/Produto",
-      "AG\\Database\\": "src/AG/Database"
+      "AG\\Database\\": "src/AG/Database",
+      "AG\\Validator\\": "src/AG/Validator"
     }
   }
 }

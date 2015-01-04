@@ -7,6 +7,7 @@ use Silex\Application,
     Silex\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Response,
     Symfony\Component\HttpFoundation\Request;
+use AG\Produto\Entity\Produto;
 
 class ApiProdutoControllerProvider implements ControllerProviderInterface
 {
@@ -32,10 +33,10 @@ class ApiProdutoControllerProvider implements ControllerProviderInterface
         $controllers->post('/', function(Request $request) use($app) {
             $result = $app['produtoService']->insert($request);
 
-            if (!empty($result)) {
+            if (!is_string($result)) {
                 return $app->json(['success'=> "Produto Cadastrado com Sucesso!"]);
             } else {
-                return $app->json(['erro'=> "Erro ao Cadastrar o produto"]);
+                return $app->json($result);
             }
         })->bind('api-produtos-cadastrar');
 
@@ -43,10 +44,10 @@ class ApiProdutoControllerProvider implements ControllerProviderInterface
         $controllers->put("/{id}", function(Request $request, $id) use($app) {
             $result = $app['produtoService']->update($request, $id);
 
-            if ($result) {
+            if (!is_string($result)) {
                 return $app->json(['success' => "Produto Alterado com Sucesso!"]);
             } else {
-                return $app->json(['erro '=> "Erro ao alterar o produto"]);
+                return $app->json($result);
             }
         })->bind('api-produtos-alterar');
 
