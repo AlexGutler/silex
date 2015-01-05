@@ -9,7 +9,7 @@
 
     <section class="container">
         <form class="form-horizontal" method="post"
-              action="{% if id == null %}{{ path('produto-salvar') }}{% else %}{{ path('produto-atualizar') }}{% endif %}">
+              action="{% if id == null %}{{ path('produto-salvar') }}{% else %}{{ path('produto-atualizar', {id: id}) }}{% endif %}">
             <input type="hidden" id="id" name="id" value="{% if id == null %}{% else %}{{ id }}{% endif %}">
             <div class="form-group">
                 <label for="nome" class="col-sm-2 control-label">Nome</label>
