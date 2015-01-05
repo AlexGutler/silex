@@ -33,8 +33,10 @@ class ProdutoValidator extends Validator
             $this->erros .= "{{ Valor }} Não pode estar vazio."."<br>";
         } elseif (!$this->isNumeric($this->produto->getValor())) {
             $this->erros .= "{{ Valor }} Deve ser numérico."."<br>";
-        } elseif (!$this->isNatualNumber($this->produto->getValor())) {
+        } elseif (!$this->isNaturalNumber($this->produto->getValor())) {
             $this->erros .= "{{ Valor }} Não pode ser negativo."."<br>";
+        } elseif ($this->isZero($this->produto->getValor())){
+            $this->erros .= "{{ Valor }} Não pode ser zero."."<br>";
         }
 
         if(!empty($this->erros))

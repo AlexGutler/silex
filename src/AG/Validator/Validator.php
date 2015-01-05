@@ -7,56 +7,36 @@ abstract class Validator
 {
     public function isEmpty($field)
     {
-        if (empty($field))
-        {
-            return true;
-        }
-        return false;
+        return empty($field) ? true : false;
     }
 
     public function minStrLength($field, $minLen)
     {
-        if (strlen($field) < $minLen)
-        {
-            return true;
-        }
-        return false;
+        return (strlen($field) < $minLen) ? true : false;
     }
 
     public function maxStrLength($field, $maxLen)
     {
-        if (strlen($field) > $maxLen)
-        {
-            return true;
-        }
-        return false;
+        return (strlen($field) > $maxLen) ? true : false;
     }
 
     public function isNumeric($field)
     {
-        if(is_numeric($field))
-        {
-            return true;
-        }
-        return false;
+        return is_numeric($field) ? true : false;
     }
 
     public function isString($field)
     {
-        if(is_string($field))
-        {
-            return true;
-        }
-        return false;
+        return is_string($field) ? true : false;
     }
 
-    public function isNatualNumber($field)
+    public function isNaturalNumber($field)
     {
-        if($field >= 0)
-        {
-            return true;
-        }
+        return ($field >= 0) ? true : false;
+    }
 
-        return false;
+    public function isZero($field)
+    {
+        return ($field < 0.1) ? true : false;
     }
 }
