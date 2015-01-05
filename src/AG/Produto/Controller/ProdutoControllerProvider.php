@@ -24,6 +24,7 @@ class ProdutoControllerProvider implements ControllerProviderInterface
         // formulario para cadastro de novo produto
         $controllers->get("/novo", function() use($app){
             return $app['twig']->render('produto-novo.twig', ['id' => null]);
+            //return $app['twig']->render('produto-novo.twig', ['id' => null, 'errors' => array('nome'=>null,'descricao'=>null,'valor'=>null)]);
         })->bind('produto-novo');
 
         // post dos dados do novo produto
@@ -33,7 +34,8 @@ class ProdutoControllerProvider implements ControllerProviderInterface
             if (!is_string($result)) {
                 return $app['twig']->render('produto-sucesso.twig', []);
             } else {
-                $app->abort(500, $result);
+                return $app['twig']->render('produto-novo.twig', ['id' => null, 'errors' => $result]);
+                //$app->abort(500, $result);
             }
         })->bind('produto-salvar');
 
