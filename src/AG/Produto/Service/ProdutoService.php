@@ -46,18 +46,16 @@ class ProdutoService
 
     public function delete($id)
     {
-        return $this->mapper->delete($id);
+        return $this->mapper->delete($id) ? true : false;
     }
 
     public function fetch($id)
     {
-        $dados = $this->mapper->fetch($id);
-        return $dados;
+        return $this->mapper->fetch($id);
     }
 
     public function fetchAll()
     {
-        $dados = $this->mapper->fetchAll();
-        return $dados;
+        return $this->mapper->fetchAll();
     }
 }

@@ -28,13 +28,12 @@ class ProdutoControllerProvider implements ControllerProviderInterface
 
         // post dos dados do novo produto
         $controllers->post("/novo", function(Request $request) use($app) {
-            $dados = $request->request->all();
-            $result = $app['produtoService']->insert($dados);
+            $result = $app['produtoService']->insert($request);
 
-            if ($result->getId()) {
+            if ($result) {
                 return $app['twig']->render('produto-sucesso.twig', []);
             } else {
-                $app->abort(500, "Erro ao salvar o produto");
+                $app->abort(500, $result);
             }
         })->bind('produto-salvar');
 
@@ -59,14 +58,13 @@ class ProdutoControllerProvider implements ControllerProviderInterface
         })->bind('produto-editar');
 
         // post dos dados da edição
-        $controllers->post("/editar", function(Request $request) use($app) {
-            $dados = $request->request->all();
-            $result = $app['produtoService']->update($dados);
+        $controllers->post("/{id}/editar", function(Request $request, $id) use($app) {
+            $result = $app['produtoService']->update($request, $id);
 
             if ($result) {
                 return $app['twig']->render('produto-sucesso.twig', []);
             } else {
-                $app->abort(500, "Erro ao atualizar o produto");
+                $app->abort(500, $result);
             }
         })->bind('produto-atualizar');
 
