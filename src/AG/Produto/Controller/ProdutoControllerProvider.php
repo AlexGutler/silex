@@ -30,7 +30,7 @@ class ProdutoControllerProvider implements ControllerProviderInterface
         $controllers->post("/novo", function(Request $request) use($app) {
             $result = $app['produtoService']->insert($request);
 
-            if ($result) {
+            if (!is_string($result)) {
                 return $app['twig']->render('produto-sucesso.twig', []);
             } else {
                 $app->abort(500, $result);
@@ -61,7 +61,7 @@ class ProdutoControllerProvider implements ControllerProviderInterface
         $controllers->post("/{id}/editar", function(Request $request, $id) use($app) {
             $result = $app['produtoService']->update($request, $id);
 
-            if ($result) {
+            if (!is_string($result)) {
                 return $app['twig']->render('produto-sucesso.twig', []);
             } else {
                 $app->abort(500, $result);
