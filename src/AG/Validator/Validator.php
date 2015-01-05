@@ -1,13 +1,14 @@
 <?php
 namespace AG\Validator;
 
-class Validator
+use JsonSchema\Constraints\Object;
+
+abstract class Validator
 {
     public function isEmpty($field)
     {
         if (empty($field))
         {
-            // return 'não pode estar vazio.';
             return true;
         }
         return false;
@@ -17,7 +18,6 @@ class Validator
     {
         if (strlen($field) < $minLen)
         {
-            // return 'deve conter pelo menos '.$minLen.' caracteres.';
             return true;
         }
         return false;
@@ -27,7 +27,6 @@ class Validator
     {
         if (strlen($field) > $maxLen)
         {
-            //return 'não pode conter mais que '.$maxLen.' caracteres.';
             return true;
         }
         return false;
@@ -37,18 +36,27 @@ class Validator
     {
         if(is_numeric($field))
         {
-            //return 'deve ser um número.';
-            true;
+            return true;
         }
         return false;
     }
 
     public function isString($field)
     {
-        if(!is_string($field))
+        if(is_string($field))
         {
             return true;
         }
+        return false;
+    }
+
+    public function isNatualNumber($field)
+    {
+        if($field >= 0)
+        {
+            return true;
+        }
+
         return false;
     }
 }

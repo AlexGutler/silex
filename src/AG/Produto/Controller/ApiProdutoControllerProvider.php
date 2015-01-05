@@ -7,7 +7,6 @@ use Silex\Application,
     Silex\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Response,
     Symfony\Component\HttpFoundation\Request;
-use AG\Produto\Entity\Produto;
 
 class ApiProdutoControllerProvider implements ControllerProviderInterface
 {

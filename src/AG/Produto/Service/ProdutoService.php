@@ -7,6 +7,7 @@ use AG\Produto\Entity\Produto,
     AG\Produto\Validator\ProdutoValidator;
 use Symfony\Component\HttpFoundation\Request;
 
+
 class ProdutoService
 {
     private $produto;
@@ -26,12 +27,9 @@ class ProdutoService
                       ->setDescricao($request->get('descricao'))
                       ->setValor($request->get('valor'));
 
-        if(is_string($this->produtoValidator->validate($this->produto)))
-        {
-            return $this->produtoValidator->validate($this->produto);
-        }
+        $isValid = $this->produtoValidator->validate($this->produto);
 
-        return $this->mapper->insert($this->produto) ? true : false;
+        return true !== $isValid ? $isValid : $this->mapper->insert($this->produto);
     }
 
     public function update(Request $request, $id)
@@ -41,12 +39,9 @@ class ProdutoService
             ->setDescricao($request->get('descricao'))
             ->setValor($request->get('valor'));
 
-        if (is_string($this->produtoValidator->validate($this->produto)))
-        {
-            return $this->produtoValidator->validate($this->produto);
-        }
+        $isValid = $this->produtoValidator->validate($this->produto);
 
-        return $this->mapper->update($this->produto) ? true : false;
+        return true !== $isValid ? $isValid : $this->mapper->update($this->produto);
     }
 
     public function delete($id)
