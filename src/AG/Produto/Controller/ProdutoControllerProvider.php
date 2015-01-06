@@ -53,20 +53,22 @@ class ProdutoControllerProvider implements ControllerProviderInterface
 
         // editar produto
         $controllers->get("/{id}/editar", function($id) use($app){
-            $result = $app['produtoService']->fetch($id);
+            $produto = $app['produtoService']->fetch($id);
 
             return $app['twig']->render('produto-novo.twig',
-                ['id' => $id, 'nome' => $result['nome'], 'descricao' => $result['descricao'], 'valor' => $result['valor']]);
+                ['id' => $id, 'produto' => $produto, 'errors' => array('nome'=>null,'descricao'=>null,'valor'=>null)]);
         })->bind('produto-editar');
 
         // post dos dados da edição
         $controllers->post("/{id}/editar", function(Request $request, $id) use($app) {
             $result = $app['produtoService']->update($request, $id);
 
-            if (!is_string($result)) {
+            if (!is_array($result)) {
                 return $app['twig']->render('produto-sucesso.twig', []);
             } else {
-                $app->abort(500, $result);
+                $produto = $app['produtoService']->fetch($id);
+                return $app['twig']->render('produto-novo.twig', ['id' => $id, 'produto' => $produto, 'errors' => $result]);
+                //$app->abort(500, $result);
             }
         })->bind('produto-atualizar');
 
