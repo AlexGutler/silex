@@ -18,6 +18,9 @@ class ProdutoValidator extends Validator
         {
             $this->erros['nome'] = "{{ Nome }} Não pode estar vazio.";
             //$this->erros .= "{{ Nome }} Não pode estar vazio."."<br>";
+        } elseif ($this->minStrLength($this->produto->getNome(), 3)) {
+            $this->erros['nome'] = "{{ Nome }} Não pode conter menos que 3 caracteres.";
+            //$this->erros .= "{{ Nome }} Não pode conter mais que 255 caracteres."."<br>";
         } elseif ($this->maxStrLength($this->produto->getNome(), 255)) {
             $this->erros['nome'] = "{{ Nome }} Não pode conter mais que 255 caracteres.";
             //$this->erros .= "{{ Nome }} Não pode conter mais que 255 caracteres."."<br>";

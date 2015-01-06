@@ -66,8 +66,7 @@ class ProdutoControllerProvider implements ControllerProviderInterface
             if (!is_array($result)) {
                 return $app['twig']->render('produto-sucesso.twig', []);
             } else {
-                $produto = $app['produtoService']->fetch($id);
-                return $app['twig']->render('produto-novo.twig', ['id' => $id, 'produto' => $produto, 'errors' => $result]);
+                return $app['twig']->render('produto-novo.twig', ['id' => $id, 'produto' => $request->request->all(), 'errors' => $result]);
                 //$app->abort(500, $result);
             }
         })->bind('produto-atualizar');
