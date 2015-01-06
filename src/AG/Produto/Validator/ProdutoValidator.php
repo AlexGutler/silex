@@ -12,7 +12,7 @@ class ProdutoValidator extends Validator
     public function validate(Produto $produto)
     {
         $this->produto = $produto;
-        $this->erros = array('nome'=>null, 'descricao'=>null, 'valor'=>null);
+        $this->erros = array('nome' => null, 'descricao' => null, 'valor' => null);
 
         if($this->isEmpty($this->produto->getNome()))
         {
@@ -50,9 +50,13 @@ class ProdutoValidator extends Validator
             //$this->erros .= "{{ Valor }} Não pode ser zero."."<br>";
         }
 
-        if(!empty($this->erros))
+        // verifica se algum erro foi encontrado
+        foreach($this->erros as $erro)
         {
-            return $this->erros;
+            if ($erro <> null)
+            {
+                return $this->erros;
+            }
         }
 
         return true;

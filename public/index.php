@@ -46,4 +46,23 @@ $app->get("/", function() use($app){
     return $app['twig']->render('index.twig', []);
 })->bind('index');
 
+$app->error(function (\Exception $e, $code) use ($app) {
+
+    if ($code == 404) {
+
+        /*$loader = $app['dataloader'];
+        $data = array(
+            'global' => $loader->load('global'),
+            'common' => $loader->load('common', $app['locale']),
+            'header' => $loader->load('header', $app['locale']),
+            'footer' => $loader->load('footer', $app['locale'])
+        );*/
+
+        return new Response( $app['twig']->render('404.twig', array( 'data' => $data )), 404);
+    }
+
+    return new Response('We are sorry, but something went terribly wrong.', $code);
+
+});
+
 $app->run();

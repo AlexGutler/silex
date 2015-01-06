@@ -24,7 +24,13 @@ class ProdutoControllerProvider implements ControllerProviderInterface
         // formulario para cadastro de novo produto
         $controllers->get("/novo", function() use($app){
             //return $app['twig']->render('produto-novo.twig', ['id' => null]);
-            return $app['twig']->render('produto-novo.twig', ['id' => null, 'errors' => array('nome'=>null,'descricao'=>null,'valor'=>null)]);
+            return $app['twig']->render(
+                'produto-novo.twig',
+                [
+                    'id' => null,
+                    'errors' => array('nome'=>null,'descricao'=>null,'valor'=>null),
+                    'produto' => array('nome'=>null,'descricao'=>null,'valor'=>null)
+                ]);
         })->bind('produto-novo');
 
         // post dos dados do novo produto
@@ -34,7 +40,12 @@ class ProdutoControllerProvider implements ControllerProviderInterface
             if (!is_array($result)) {
                 return $app['twig']->render('produto-sucesso.twig', []);
             } else {
-                return $app['twig']->render('produto-novo.twig', ['id' => null, 'errors' => $result]);
+                return $app['twig']->render('produto-novo.twig',
+                    [
+                        'id' => null,
+                        'errors' => $result,
+                        'produto' => $request->request->all()
+                    ]);
                 //$app->abort(500, $result);
             }
         })->bind('produto-salvar');
@@ -66,7 +77,12 @@ class ProdutoControllerProvider implements ControllerProviderInterface
             if (!is_array($result)) {
                 return $app['twig']->render('produto-sucesso.twig', []);
             } else {
-                return $app['twig']->render('produto-novo.twig', ['id' => $id, 'produto' => $request->request->all(), 'errors' => $result]);
+                return $app['twig']->render('produto-novo.twig',
+                    [
+                        'id' => $id,
+                        'produto' => $request->request->all(),
+                        'errors' => $result
+                    ]);
                 //$app->abort(500, $result);
             }
         })->bind('produto-atualizar');

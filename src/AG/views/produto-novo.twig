@@ -14,7 +14,7 @@
             <div class="form-group">
                 <label for="nome" class="col-sm-2 control-label">Nome</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="nome" name="nome" required value="{% if id == null %}{% else %}{{ produto.nome }}{% endif %}">
+                    <input type="text" class="form-control" id="nome" name="nome" required value="{% if produto.nome == null %}{% else %}{{ produto.nome }}{% endif %}">
                     {% if errors.nome != null %}
                         <span class="alert-danger col-md-12">{{ errors.nome }}</span>
                     {% endif %}
@@ -23,7 +23,7 @@
             <div class="form-group">
                 <label for="descricao" class="col-sm-2 control-label">Descrição</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" id="descricao" name="descricao" required rows="3">{% if id == null %}{% else %}{{ produto.descricao }}{% endif %}</textarea>
+                    <textarea class="form-control" id="descricao" name="descricao" required rows="3">{% if produto.descricao == null %}{% else %}{{ produto.descricao }}{% endif %}</textarea>
                     {% if errors.descricao != null %}
                     <span class="alert-danger col-md-12">{{ errors.descricao }}</span>
                     {% endif %}
@@ -32,7 +32,7 @@
             <div class="form-group">
                 <label for="valor" class="col-sm-2 control-label">Valor</label>
                 <div class="col-sm-10">
-                    <input type="number"  step="any" class="form-control" id="valor" required name="valor" value="{% if id == null %}{% else %}{{ produto.valor }}{% endif %}">
+                    <input type="number"  step="any" class="form-control" id="valor" required name="valor" value="{% if produto.valor == null %}{% else %}{{ produto.valor }}{% endif %}">
                     {% if errors.valor != null %}
                         <span class="alert-danger col-md-12">{{ errors.valor }}</span>
                     {% endif %}
@@ -41,9 +41,9 @@
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <button type="submit" class="btn btn-primary">Salvar</button>
-                    {% if id == null %}
+                    {# {% if id == null %}
                         <button type="reset" class="btn btn-warning">Limpar</button>
-                    {% endif %}
+                    {% endif %} #}
                 </div>
             </div>
         </form>
